@@ -48,5 +48,5 @@ export const podcastServiceApi = createApi({
   })
 });
 export const {
-    useGetPodcastQuery, useGetPodcastsQuery
+  useLazyGetPodcastQuery, useLazyGetPodcastsQuery
 } = podcastServiceApi;

@@ -1,7 +1,6 @@
-$primary100: #DBFFB4;
-$primary300: #99CC33;
-$primary500: #58721A;
 
+//Blue
+$primary-blue: #449bec;
 
 // grayscale
 $grayscale200: #F3F4F6;
@@ -13,19 +12,6 @@ $Grayscale700:#314450;
 $grayscale800: #001827;
 
 //gray
-$gray700: #5a5d5d;
-
-// NEUTRALS
-$white: #ffffff;
-$black: #1e1f1f;
-$neutral40: #CED4DA;
-
-
-
-
-//////////////////////
-
-
 $gray700: #314450;
 $gray500: #8d9091;
 $gray300: #c6c8c8;
@@ -34,11 +20,17 @@ $gray100: #f5f5f5;
 $neutral01: #051730;
 $neutral05: #e0e4e9;
 
+// NEUTRALS
+$white: #ffffff;
+$black: #1e1f1f;
+$neutral40: #CED4DA;
+
+
 // RED PRIMARY
 
 $primary700: #931710;
 $primary600: #ae1b13;
-/*$primary500: #d1281f;*/
+$primary500: #d1281f;
 $primary50: #fbebea;
 
 // SECONDARY INFORMATIVE
@@ -57,22 +49,3 @@ $warning-masa: #fdf2e3;
 $warning-original: #ef9924;
 $warning-trazo: #efd2a9;
 $warning-text: #8f570a;
-
-// MARCADORES
-
-// CONTEXTUAL
-
-$context-favorite: #ffbb0d;
-
-// LINES
-
-/* Transportes / Bus / EMT */
-$blue500: #006eb7;
-
-/* Transportes / Bus / Interurbano */
-$green500: #7ba63e;
-
-/* Transportes / Bus / Otros */
-$red550: #c32922;
-
-$redIconOtrosUrbanos: #e60003;

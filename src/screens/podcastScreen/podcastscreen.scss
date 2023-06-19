@@ -1,0 +1,46 @@
+@import '../../resources/styles/colors.scss';
+
+podcast-screen-content,
+.podcast-screen-content {
+  padding: 50px;
+
+  &>.title {
+    font-size: 20px;
+    color: $primary-blue
+  }
+  
+  &>.filter {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    padding:20px;
+    margin-left: auto;
+
+    &>.total-podcasts {
+      color: $white;
+      padding-inline:5px;
+      font-weight: bold;
+      background-color: $primary-blue;
+      border-radius: 7.5px;
+      margin-right: 10px;
+      display: flex;
+    }
+  
+    &>.input-filter {
+      padding:5px;
+      width:200px;
+      border: 2px solid $gray200;
+      border-radius: 5px;
+    }
+  }
+
+  &>.podcast-list {
+    padding:20px;
+    padding-top:40px;
+    transition: all;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+}
