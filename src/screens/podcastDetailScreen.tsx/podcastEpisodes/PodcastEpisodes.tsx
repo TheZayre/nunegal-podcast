@@ -16,9 +16,6 @@ export default function PodcastEpisodes() {
     for(let element in podcastEpisodes){
       let date = new Date(podcastEpisodes[element]?.isoDate) as any
       date = date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear()
-
-      console.log(podcastEpisodes[element]?.guid);
-      console.log(podcastEpisodes[element]?.guid.split('/').join());
       
       res.push(
         <div className={'header'} key={element}>

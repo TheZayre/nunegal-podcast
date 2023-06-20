@@ -2,7 +2,7 @@ import Divider from 'components/divider/Divider';
 import './podcastdetailscreen.scss'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setDescription, setEpisodes, setPodcast } from 'redux/slices/podcastSlice';
+import { resetSelected, setDescription, setEpisodes, setPodcast } from 'redux/slices/podcastSlice';
 import { useLazyGetPodcastQuery } from 'redux/services/podcastServiceApi';
 import { useEffect } from 'react';
 import PodcastCard from './podcastCard/PodcastCard';
@@ -16,20 +16,25 @@ export default function PodcastDetailScreen() {
   const dispatch = useDispatch()
   const [getPodcast] = useLazyGetPodcastQuery()
   const { id, idEpisode } = useParams();
-  console.log(idEpisode)
 
   useEffect(()=>{
-    dispatch(setPodcast(null))
     const fetchData = () => {
       getPodcast(id).then(async (data)=>{
         dispatch(setPodcast(JSON.parse(data?.data?.contents)?.results[0]))
 
-        let feed = await parser.parseURL(`${JSON.parse(data?.data?.contents)?.results[0]?.feedUrl}`);
+        let feed = await parser.parseURL(`${JSON.parse(data?.data?.contents)?.results[0]?.feedUrl}`) as any;
+        
+        //console.log(feed);
+        //localStorage.setItem(JSON.parse(data?.data?.contents)?.results[0]?.feedUrl, JSON.stringify(feed))
+
         dispatch(setEpisodes(feed?.items))
         dispatch(setDescription(feed?.description))
     })
   }
     fetchData()
+    return () => {
+       dispatch(resetSelected())
+    };
   },[])
   
 

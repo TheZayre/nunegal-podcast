@@ -39,6 +39,12 @@ export const podcastSlice = createSlice({
       }
     },
 
+    resetSelected: (state?) => {
+      state.podcastEpisodes = [];
+      state.podcastSelected = null;
+
+    },
+
   }
 });
 
@@ -46,7 +52,8 @@ export const {
   setPodcast,
   setPodcasts,
   setDescription,
-  setEpisodes
+  setEpisodes,
+  resetSelected
 } = podcastSlice.actions;
 
 export const podcastInformation = (state: RootState) => state.podcastSlice;
