@@ -1,8 +1,9 @@
+import { IDivider } from 'types/interfaces';
 import './divider.scss'
-export default function Divider() {
+export default function Divider(props : IDivider) {
 
   return (
-    <div className={'divider'}/>
+    <div className={`divider ${props?.className}`}/>
   );
 }
 

@@ -1,0 +1,17 @@
+@import '../../resources/styles/colors.scss';
+
+podcast-detail-screen-content,
+.podcast-detail-screen-content {
+  padding: 50px;
+
+  &>.podcast-detail {
+    padding: 20px;
+    display:flex;
+  }
+  &>.title {
+    cursor: pointer;
+    font-size: 20px;
+    color: $primary-blue
+  }
+
+}

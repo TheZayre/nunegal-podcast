@@ -1,12 +1,12 @@
+import { IPodcastElement } from 'types/interfaces';
 import './podcastelement.scss'
-export default function PodcastElement() {
-
+export default function PodcastElement(props : IPodcastElement) {
 
   return (
-    <div className={'podcast-element-content'}>
-        <img className={'podcast-image'} src={'https://cdn.slidesharecdn.com/ss_thumbnails/arqwebhttp-1223462128093806-8-thumbnail.jpg?width=640&height=640&fit=bounds'}></img>
-        <div className={'podcast-title'}>{'ALL SONGS CONSIDERED'}</div>
-        <div className={'podcast-author'}>{'Author: NPR'}</div>
+    <div className={'podcast-element-content'} onClick={()=>{ if(props?.onClick) props?.onClick() }}>
+        <img className={'podcast-image'} src={props?.image}></img>
+        <div className={'podcast-title'}>{props?.title}</div>
+        <div className={'podcast-author'}>{`Author: ${props?.author}`}</div>
     </div>
   );
 }

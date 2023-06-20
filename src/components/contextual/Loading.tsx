@@ -8,7 +8,6 @@ import { R } from '../../resources/R';
 export default function Loading() {
   const contextualLoading = useSelector(contextualInformationLoading);
 
-
   return (
     contextualLoading ? <div className='content-loading'>
       <div className='loading'>

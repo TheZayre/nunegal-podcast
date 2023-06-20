@@ -22,8 +22,7 @@ export const store = configureStore({
       podcastServiceApi.middleware
     );
   },
-  // devTools: process.env.NODE_ENV !== 'production',
-  // enhancers: [batchedSubscribe(debounceNotify)],
+  
 });
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
