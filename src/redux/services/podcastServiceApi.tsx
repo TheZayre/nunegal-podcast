@@ -1,7 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { contextualSlice } from 'redux/slices/contextualSlice';
+import { setDescription, setEpisodes, setPodcast, setPodcasts } from 'redux/slices/podcastSlice';
+import Parser from 'rss-parser';
 
 const CORS_PROXY = "https://api.allorigins.win/get?url=";
+const CORS_PROXY_2 = "https://cors-anywhere.herokuapp.com/";
 
 export const podcastServiceApi = createApi({
   reducerPath: '`podcastServiceApi`',
@@ -20,6 +23,7 @@ export const podcastServiceApi = createApi({
         try {
           dispatch(contextualSlice.actions.updateShowLoading(true))
           const { data } = await queryFulfilled;
+          dispatch(setPodcasts(data))
           dispatch(contextualSlice.actions.updateShowLoading(false))
           console.log('success!', data);
         } catch (err) {
@@ -43,6 +47,14 @@ export const podcastServiceApi = createApi({
           try {
             dispatch(contextualSlice.actions.updateShowLoading(true))
             const { data } = await queryFulfilled;
+            
+            dispatch(setPodcast(JSON.parse(data?.contents)?.results[0]))
+            let parser = new Parser();
+            let feed = await parser.parseURL(`${CORS_PROXY_2+JSON.parse(data?.contents)?.results[0]?.feedUrl}`) as any;
+
+        //localStorage.setItem(JSON.parse(data?.data?.contents)?.results[0]?.feedUrl, JSON.stringify(feed))
+            dispatch(setEpisodes(feed?.items))
+            dispatch(setDescription(feed?.description))
             dispatch(contextualSlice.actions.updateShowLoading(false))
           } catch (err) {
             dispatch(contextualSlice.actions.updateShowLoading(false))
