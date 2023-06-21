@@ -1,0 +1,14 @@
+export function getTime(seconds){
+    
+    if(seconds?.indexOf(':')<0){
+        var hour = Math.floor(seconds / 3600) as any;
+        hour = (hour < 10)? '0' + hour : hour;
+        var minute = Math.floor((seconds / 60) % 60) as any;
+        minute = (minute < 10)? '0' + minute : minute;
+        var second = seconds % 60 as any;
+        second = (second < 10)? '0' + second : second;
+        return hour + ':' + minute + ':' + second;
+        
+    }
+    return seconds;
+}

@@ -22,11 +22,11 @@ export default function PodcastDetailScreen() {
       getPodcast(id).then(async (data)=>{
         dispatch(setPodcast(JSON.parse(data?.data?.contents)?.results[0]))
 
+
         let feed = await parser.parseURL(`${JSON.parse(data?.data?.contents)?.results[0]?.feedUrl}`) as any;
         
         //console.log(feed);
         //localStorage.setItem(JSON.parse(data?.data?.contents)?.results[0]?.feedUrl, JSON.stringify(feed))
-
         dispatch(setEpisodes(feed?.items))
         dispatch(setDescription(feed?.description))
     })

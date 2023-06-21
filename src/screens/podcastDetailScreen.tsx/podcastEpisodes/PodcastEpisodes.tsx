@@ -2,6 +2,7 @@ import './podcastepisodes.scss'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { podcastInformationPodcastEpisodes, podcastInformationPodcastSelected } from 'redux/slices/podcastSlice';
+import { getTime } from 'utils/DateUtils';
 
 export default function PodcastEpisodes() {
 
@@ -23,7 +24,7 @@ export default function PodcastEpisodes() {
             {podcastEpisodes[element]?.title}
             </div>
           <div className={i%2==0 ? 'date-element pair' : 'date-element'}>{date}</div>
-          <div className={i%2==0 ? 'duration-element pair' : 'duration-element'}>{podcastEpisodes[element]?.itunes?.duration ?? '-'}</div>
+          <div className={i%2==0 ? 'duration-element pair' : 'duration-element'}>{getTime(podcastEpisodes[element]?.itunes?.duration) ?? '-'}</div>
       </div>
       )
       i++

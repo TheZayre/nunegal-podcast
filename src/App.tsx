@@ -11,6 +11,13 @@ import PodcastDetailScreen from 'screens/podcastDetailScreen.tsx/PodcasDetailScr
 
 export default function App() {
 
+  /**
+   * Persistencia
+   * CORS
+   * Estilo de reproductor
+   * 
+   * / */
+
   const [getPodcasts] = useLazyGetPodcastsQuery();
   const dispatch = useDispatch();
 
