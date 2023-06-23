@@ -8,16 +8,19 @@ import { useEffect } from 'react';
 import PodcastCard from './podcastCard/PodcastCard';
 import PodcastEpisodes from './podcastEpisodes/PodcastEpisodes';
 import PodcastEpisodeDetail from './podcastEpisodeDetail/PodcastEpisodeDetail';
+import DBPresenter from 'redux/DBPresenter';
 
 export default function PodcastDetailScreen() {
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const [getPodcast] = useLazyGetPodcastQuery()
   const { id, idEpisode } = useParams();
+  const {getPodcastPersistance} = DBPresenter()
 
   useEffect(()=>{
     const fetchData = () => {
-      getPodcast(id)
+      getPodcastPersistance(id)
+      //getPodcast(id)
   }
     fetchData()
     return () => {

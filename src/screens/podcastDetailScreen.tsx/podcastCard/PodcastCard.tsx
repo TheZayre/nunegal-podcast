@@ -12,7 +12,7 @@ export default function PodcastCard() {
         <img className={'image'} src={podcastSelected?.artworkUrl600}/>
         <Divider/>
         <div className={'title'}>{podcastSelected?.collectionName}</div>
-        <div className={'author'}>{`by ${podcastSelected?.artistName}`}</div>
+        <div className={'author'}>{podcastSelected?.artistName ? `by ${podcastSelected?.artistName}` : ''}</div>
         <Divider/>
         <div className={'title'}>{'Description:'}</div>
         <div className={'description'} dangerouslySetInnerHTML={{__html:podcastSelected?.description}}/>
