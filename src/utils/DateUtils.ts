@@ -12,3 +12,13 @@ export function getTime(seconds){
     }
     return seconds;
 }
+
+export function moreOldThanADay(date){
+    var fechaInicio = new Date(date).getTime();
+    var fechaFin    = new Date().getTime();
+    if((fechaFin-fechaInicio)/(1000*60*60*24)>=1 ){
+          return true;
+    }
+    else return false;
+      
+}
