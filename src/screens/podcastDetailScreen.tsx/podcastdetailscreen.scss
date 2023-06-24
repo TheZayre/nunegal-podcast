@@ -12,21 +12,22 @@ podcast-detail-screen-content,
 
   &>.podcast-detail {
     padding: 20px;
-    display:flex;
+    display: flex;
   }
-  
+
   &>.row {
     display: flex;
+
     &>.title {
       font-size: 20px;
       cursor: pointer;
       color: $primary-blue
     }
-  
+
     &>.loading {
-      margin:10px;
+      margin: 10px;
       margin-left: auto;
-      width:fit-content;
+      width: fit-content;
     }
   }
 

@@ -3,25 +3,25 @@
 podcast-episodes-content,
 .podcast-episodes-content {
   margin-left: 100px;
-  width:100%;
+  width: 100%;
 
   &>.total-episodes {
-    padding:10px;
+    padding: 10px;
     font-size: 28px;
-    width:100%;
+    width: 100%;
     font-weight: 500;
-    -webkit-box-shadow: 0px 3px 5px 1px rgba(194,194,194,0.75);
-    -moz-box-shadow: 0px 3px 5px 1px rgba(194,194,194,0.75);
-    box-shadow: 0px 3px 5px 1px rgba(194,194,194,0.75);
+    -webkit-box-shadow: 0px 3px 5px 1px rgba(194, 194, 194, 0.75);
+    -moz-box-shadow: 0px 3px 5px 1px rgba(194, 194, 194, 0.75);
+    box-shadow: 0px 3px 5px 1px rgba(194, 194, 194, 0.75);
   }
 
   &>.episodes-list {
-    padding:10px;
+    padding: 10px;
     margin-top: 20px;
-    width:100%;
-    -webkit-box-shadow: 0px 3px 5px 1px rgba(194,194,194,0.75);
-    -moz-box-shadow: 0px 3px 5px 1px rgba(194,194,194,0.75);
-    box-shadow: 0px 3px 5px 1px rgba(194,194,194,0.75);
+    width: 100%;
+    -webkit-box-shadow: 0px 3px 5px 1px rgba(194, 194, 194, 0.75);
+    -moz-box-shadow: 0px 3px 5px 1px rgba(194, 194, 194, 0.75);
+    box-shadow: 0px 3px 5px 1px rgba(194, 194, 194, 0.75);
 
     &>.header {
       display: flex;

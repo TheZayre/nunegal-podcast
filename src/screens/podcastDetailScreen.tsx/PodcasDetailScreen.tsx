@@ -18,7 +18,7 @@ export default function PodcastDetailScreen() {
   const { getPodcastPersistence } = DBPresenter()
   const podcastSelected = useSelector(podcastInformationPodcastSelected)
   const contextualLoading = useSelector(contextualInformationLoading);
-  
+
   useEffect(() => {
     //Obtiene el detalle del podcast seleccionado
     getPodcastPersistence(id)
@@ -31,7 +31,7 @@ export default function PodcastDetailScreen() {
   return (
     <div className={'podcast-detail-screen-content'}>
       <div className={'row'}>
-        <h2 className={'title'} onClick={(()=>navigate('/'))}>Podcaster</h2>
+        <h2 className={'title'} onClick={(() => navigate('/'))}>Podcaster</h2>
         <div className={'loading'}>
           <ClipLoader className={'loading'} loading={contextualLoading} />
         </div>

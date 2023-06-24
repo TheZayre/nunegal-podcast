@@ -2,12 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 export interface ContextualInformation {
-    ContextualInformation:{
-        showLoading: boolean;
-    }
+  ContextualInformation: {
+    showLoading: boolean;
+  }
 }
 
-const initialState : ContextualInformation = {
+const initialState: ContextualInformation = {
   ContextualInformation: {
     showLoading: false,
   },

@@ -8,21 +8,21 @@ import DBPresenter from 'redux/DBPresenter';
 
 export default function App() {
 
-  const {getPodcastsPersistence} = DBPresenter()
+  const { getPodcastsPersistence } = DBPresenter()
 
-  useEffect(()=>{
+  useEffect(() => {
     //Obtiene el listado de podcasts
     getPodcastsPersistence()
-  },[])
+  }, [])
 
   return (
     <>
       <Loading />
       <BrowserRouter>
         <Routes>
-          <Route path='*' element={<PodcastScreen />}/>
-          <Route path='/podcast/:id' element={<PodcastDetailScreen />}/>
-          <Route path='/podcast/:id/episode/:idEpisode' element={<PodcastDetailScreen />}/>
+          <Route path='*' element={<PodcastScreen />} />
+          <Route path='/podcast/:id' element={<PodcastDetailScreen />} />
+          <Route path='/podcast/:id/episode/:idEpisode' element={<PodcastDetailScreen />} />
         </Routes>
       </BrowserRouter>
     </>

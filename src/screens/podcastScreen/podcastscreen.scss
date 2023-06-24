@@ -3,50 +3,52 @@
 podcast-screen-content,
 .podcast-screen-content {
   padding: 50px;
-  
+
   &>.row {
     display: flex;
+
     &>.title {
       font-size: 20px;
       cursor: pointer;
       color: $primary-blue
     }
-  
+
     &>.loading {
-      margin:10px;
+      margin: 10px;
       margin-left: auto;
-      width:fit-content;
+      width: fit-content;
     }
   }
-  
+
   &>.filter {
     width: fit-content;
     display: flex;
     align-items: center;
-    padding:20px;
+    padding: 20px;
     margin-left: auto;
 
     &>.total-podcasts {
       color: $white;
-      padding-inline:5px;
+      padding-inline: 5px;
       font-weight: bold;
       background-color: $primary-blue;
       border-radius: 7.5px;
       margin-right: 10px;
       display: flex;
     }
-  
+
     &>.input-filter {
-      padding:5px;
-      width:200px;
+      padding: 5px;
+      width: 200px;
+      
       border: 2px solid $gray200;
       border-radius: 5px;
     }
   }
 
   &>.podcast-list {
-    padding:20px;
-    padding-top:40px;
+    padding: 20px;
+    padding-top: 40px;
     transition: all;
     display: flex;
     flex-wrap: wrap;

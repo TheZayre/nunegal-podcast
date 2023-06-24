@@ -10,19 +10,19 @@ export default function PodcastEpisodeDetail() {
   const [episodeSelected, setEpisodeSelected] = useState() as any
   const { idEpisode } = useParams();
 
-  useEffect(()=>{
+  useEffect(() => {
     //Busca el episodio seleccionado
-    let filter = podcastEpisodes.find(({guid})=>guid.split('/').join().includes(idEpisode))
+    let filter = podcastEpisodes.find(({ guid }) => guid.split('/').join().includes(idEpisode))
     setEpisodeSelected(filter)
-    
-  },[podcastEpisodes])
-  
+
+  }, [podcastEpisodes])
+
   return (
     <div className={'podcast-episode-detail-content'}>
       <div className={'title'}>{episodeSelected?.title}</div>
       {episodeSelected
-        ?<div className={'description'} dangerouslySetInnerHTML={{__html:episodeSelected["content:encoded"] ?? episodeSelected?.content}}/>
-        :null
+        ? <div className={'description'} dangerouslySetInnerHTML={{ __html: episodeSelected["content:encoded"] ?? episodeSelected?.content }} />
+        : null
       }
       <audio className={'audio'} controls src={episodeSelected?.enclosure?.url}></audio>
     </div>

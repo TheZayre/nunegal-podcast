@@ -3,13 +3,13 @@ import { RootState } from '../store';
 export interface PodcastInformation {
   podcastList: any;
   podcastSelected: any | null;
-  podcastEpisodes : any[];
+  podcastEpisodes: any[];
 }
 
-const initialState : PodcastInformation = {
-    podcastList: [],
-    podcastSelected: null,
-    podcastEpisodes: []
+const initialState: PodcastInformation = {
+  podcastList: [],
+  podcastSelected: null,
+  podcastEpisodes: []
 };
 
 export const podcastSlice = createSlice({
@@ -22,10 +22,10 @@ export const podcastSlice = createSlice({
       }
     },
     setPodcast: (state, action?) => {
-        if (action.payload !== undefined) {
-          state.podcastSelected = { ...state.podcastSelected, ...action.payload };
-        }
-      },
+      if (action.payload !== undefined) {
+        state.podcastSelected = { ...state.podcastSelected, ...action.payload };
+      }
+    },
 
     setDescription: (state, action?) => {
       if (action.payload !== undefined) {

@@ -6,10 +6,8 @@ import { podcastServiceApi } from './services/podcastServiceApi';
 export const reducer = {
   [podcastSlice.name]: podcastSlice.reducer,
   [contextualSlice.name]: contextualSlice.reducer,
-
   [podcastServiceApi.reducerPath]: podcastServiceApi.reducer,
 }
-
 
 export const store = configureStore({
   reducer,
@@ -22,7 +20,7 @@ export const store = configureStore({
       podcastServiceApi.middleware
     );
   },
-  
+
 });
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
