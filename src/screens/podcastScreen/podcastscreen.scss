@@ -3,11 +3,20 @@
 podcast-screen-content,
 .podcast-screen-content {
   padding: 50px;
-
-  &>.title {
-    font-size: 20px;
-    cursor: pointer;
-    color: $primary-blue
+  
+  &>.row {
+    display: flex;
+    &>.title {
+      font-size: 20px;
+      cursor: pointer;
+      color: $primary-blue
+    }
+  
+    &>.loading {
+      margin:10px;
+      margin-left: auto;
+      width:fit-content;
+    }
   }
   
   &>.filter {

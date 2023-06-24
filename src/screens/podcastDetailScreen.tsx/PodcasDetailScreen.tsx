@@ -8,6 +8,8 @@ import PodcastCard from './podcastCard/PodcastCard';
 import PodcastEpisodes from './podcastEpisodes/PodcastEpisodes';
 import PodcastEpisodeDetail from './podcastEpisodeDetail/PodcastEpisodeDetail';
 import DBPresenter from 'redux/DBPresenter';
+import { ClipLoader } from 'react-spinners';
+import { contextualInformationLoading } from 'redux/slices/contextualSlice';
 
 export default function PodcastDetailScreen() {
   const navigate = useNavigate();
@@ -15,7 +17,8 @@ export default function PodcastDetailScreen() {
   const { id, idEpisode } = useParams();
   const { getPodcastPersistence } = DBPresenter()
   const podcastSelected = useSelector(podcastInformationPodcastSelected)
-  console.log(podcastSelected)
+  const contextualLoading = useSelector(contextualInformationLoading);
+  
   useEffect(() => {
     //Obtiene el detalle del podcast seleccionado
     getPodcastPersistence(id)
@@ -27,7 +30,12 @@ export default function PodcastDetailScreen() {
 
   return (
     <div className={'podcast-detail-screen-content'}>
-      <h2 className={'title'} onClick={() => navigate('/')}>Podcaster</h2>
+      <div className={'row'}>
+        <h2 className={'title'} onClick={(()=>navigate('/'))}>Podcaster</h2>
+        <div className={'loading'}>
+          <ClipLoader className={'loading'} loading={contextualLoading} />
+        </div>
+      </div>
       <Divider className={'divider'} />
       {podcastSelected && Object.keys(podcastSelected)?.length
         ? <div className={'podcast-detail'}>

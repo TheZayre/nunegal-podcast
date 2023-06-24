@@ -20,7 +20,7 @@ export default function App() {
       <Loading />
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<PodcastScreen />}/>
+          <Route path='*' element={<PodcastScreen />}/>
           <Route path='/podcast/:id' element={<PodcastDetailScreen />}/>
           <Route path='/podcast/:id/episode/:idEpisode' element={<PodcastDetailScreen />}/>
         </Routes>

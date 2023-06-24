@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
 import './loading.scss';
 import { contextualInformationLoading } from '../../redux/slices/contextualSlice';
-import React from 'react';
 import { R } from '../../resources/R';
 
 export default function Loading() {

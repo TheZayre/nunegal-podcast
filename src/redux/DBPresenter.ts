@@ -4,7 +4,7 @@ import { contextualSlice } from "./slices/contextualSlice";
 import { setEpisodes, setDescription, setPodcast, setPodcasts } from "./slices/podcastSlice";
 import { useDispatch } from "react-redux";
 import { useLazyGetPodcastQuery, useLazyGetPodcastsQuery } from "./services/podcastServiceApi";
-const CORS_PROXY_2 = "https://cors-anywhere.herokuapp.com/";
+const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 
 export default function DBPresenter() {
     const dispatch = useDispatch();
@@ -100,9 +100,11 @@ export default function DBPresenter() {
                 const result = event.target.result;
                 if (result?.timeAdded && !moreOldThanADay(result?.timeAdded)) {
                     feed = result?.data;
+                    dispatch(setEpisodes(feed?.items));
+                    dispatch(setDescription(feed?.description));
                 } else {
                     dispatch(contextualSlice.actions.updateShowLoading(true));
-                    feed = await parser.parseURL(`${CORS_PROXY_2 + JSON.parse(data?.contents)?.results[0]?.feedUrl}`).catch((e)=>{
+                    feed = await parser.parseURL(`${CORS_PROXY + JSON.parse(data?.contents)?.results[0]?.feedUrl}`).catch((e)=>{
                         console.log(e)
                     });
                     if(feed){

@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# Aplicación para la reproducción de podcasts
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicación cuyo objetivo es la reproducción de distintos episodios que disponga un podcast.
 
-## Available Scripts
+## Requisitos y pasos previos
 
-In the project directory, you can run:
+A fin de ejecutar la aplicación, es necesario instalar las dependencias correspondientes. Para ello, es importante disponer de un gestor de dependencias, como puede ser [npm][npm].
 
-### `npm start`
+También, la aplicación hace uso de recursos externos que no proveen cabeceras CORS. Es por ello, que se ha utilizado un proxy para poder obtener los recursos deseados. Deberemos acceder a https://cors-anywhere.herokuapp.com/ y solicitar acceso de manera temporal al servidor.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Clonar el repositorio
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Clonaremos el repositorio con el siguiente comando:
 
-### `npm test`
+```
+git clone https://github.com/TheZayre/nunegal-podcast.git
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Instalación de las dependencias
 
-### `npm run build`
+Una vez ya disponemos del código, nos situamos en la carpeta donde que se encuentre el  `package.json` y ejecutamos lo siguiente:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Ejecución de la aplicación
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+La aplicación dispone de dos modos de ejecución, siendo estos un modo de desarrollo y otro de producción.
 
-### `npm run eject`
+### Modo _development_
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Para ejecutar la aplicación en modo desarrollo deberemos de estar situados en carpeta raíz del proyecto y ejecutar:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+El comando `npm start` inicia un servidor local que permite ejecutar tu aplicación en un entorno de desarrollo. Además, mientras iniciemos la aplicación en este modo cuando se detectan cambios en los archivos de código fuente se recargará la aplicación automaticamente reflejando dichos cambios.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Una vez ejecutado el comando anterior, al insertar la url http://localhost:3000 en el navegador tendremos la aplicación en ejecución.
 
-## Learn More
+### Modo _production_
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Para ejecutar la aplicación en modo producción deberemos de estar situados en carpeta raíz del proyecto y ejecutar:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+npm run build
+```
 
-### Code Splitting
+El comando anterior se utiliza para construir y preparar una aplicación para su despliegue en un entorno de producción. Durante este proceso, se realizan tareas como compilación, optimización, minificación y generación de archivos finales optimizados para su implementación, los cuales se encontrarán dentro de la carpeta `build`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Una vez tenemos generados los archivos dentro de la carpeta `build` podemos ejecutarlo con [serve][serve].
 
-### Analyzing the Bundle Size
+Si no tenemos instalado en nuestro ordenador `serve`, lo podemos hacer gracias al siguiente comando:
+```
+npm install --global serve
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Ejecutamos lo siguiente, donde `build` es la carpeta que contiene los archivos generados:
 
-### Making a Progressive Web App
+```
+serve -s build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Una vez ejecutado el comando anterior, al insertar la url http://localhost:3000 en el navegador tendremos la aplicación en ejecución.
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[serve]: https://www.npmjs.com/package/serve
+[npm]: https://www.npmjs.com/
+[yarn]: https://yarnpkg.com/lang/en/

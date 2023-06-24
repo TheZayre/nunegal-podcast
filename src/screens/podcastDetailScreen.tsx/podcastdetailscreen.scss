@@ -14,10 +14,20 @@ podcast-detail-screen-content,
     padding: 20px;
     display:flex;
   }
-  &>.title {
-    cursor: pointer;
-    font-size: 20px;
-    color: $primary-blue
+  
+  &>.row {
+    display: flex;
+    &>.title {
+      font-size: 20px;
+      cursor: pointer;
+      color: $primary-blue
+    }
+  
+    &>.loading {
+      margin:10px;
+      margin-left: auto;
+      width:fit-content;
+    }
   }
 
 }
