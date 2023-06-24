@@ -28,7 +28,7 @@ npm install
 
 La aplicación dispone de dos modos de ejecución, siendo estos un modo de desarrollo y otro de producción.
 
-### Modo _development_
+### Modo desarrollo
 
 Para ejecutar la aplicación en modo desarrollo deberemos de estar situados en carpeta raíz del proyecto y ejecutar:
 
@@ -40,7 +40,7 @@ El comando `npm start` inicia un servidor local que permite ejecutar tu aplicaci
 
 Una vez ejecutado el comando anterior, al insertar la url http://localhost:3000 en el navegador tendremos la aplicación en ejecución.
 
-### Modo _production_
+### Modo producción
 
 Para ejecutar la aplicación en modo producción deberemos de estar situados en carpeta raíz del proyecto y ejecutar:
 
