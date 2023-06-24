@@ -1,11 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { contextualSlice } from 'redux/slices/contextualSlice';
-import { setDescription, setEpisodes, setPodcast, setPodcasts } from 'redux/slices/podcastSlice';
-import Parser from 'rss-parser';
-import { moreOldThanADay } from 'utils/DateUtils';
+import { setPodcast, setPodcasts } from 'redux/slices/podcastSlice';
 
 const CORS_PROXY = "https://api.allorigins.win/get?url=";
-const CORS_PROXY_2 = "https://cors-anywhere.herokuapp.com/";
 
 export const podcastServiceApi = createApi({
   reducerPath: '`podcastServiceApi`',
@@ -33,39 +30,33 @@ export const podcastServiceApi = createApi({
         } finally {
         }
       }
-    
+
     }),
 
-    
-    getPodcast: builder.query<any, any>({
-        query: (podcastId) => ({
-          url: `${CORS_PROXY}https://itunes.apple.com/lookup?id=${podcastId}`,
-          method: 'GET',
-        }),
-  
-        async onQueryStarted(id, { dispatch, queryFulfilled }) {
-          console.log('starting!');
-          try {
-            dispatch(contextualSlice.actions.updateShowLoading(true))
-            const { data } = await queryFulfilled;
-            
-            dispatch(setPodcast(JSON.parse(data?.contents)?.results[0]))
-            /*let parser = new Parser();
-            let feed = await parser.parseURL(`${CORS_PROXY_2+JSON.parse(data?.contents)?.results[0]?.feedUrl}`)
-            dispatch(setEpisodes(feed?.items))
-            dispatch(setDescription(feed?.description))
-            )*/
-            dispatch(contextualSlice.actions.updateShowLoading(false))
 
-          
-          } catch (err) {
-            dispatch(contextualSlice.actions.updateShowLoading(false))
-            console.log('error... ', err);
-          } finally {
-          }
-        }
-      
+    getPodcast: builder.query<any, any>({
+      query: (podcastId) => ({
+        url: `${CORS_PROXY}https://itunes.apple.com/lookup?id=${podcastId}`,
+        method: 'GET',
       }),
+
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        console.log('starting!');
+        try {
+          dispatch(contextualSlice.actions.updateShowLoading(true))
+          const { data } = await queryFulfilled;
+          dispatch(setPodcast(JSON.parse(data?.contents)?.results[0]))
+          dispatch(contextualSlice.actions.updateShowLoading(false))
+
+
+        } catch (err) {
+          dispatch(contextualSlice.actions.updateShowLoading(false))
+          console.log('error... ', err);
+        } finally {
+        }
+      }
+
+    }),
   })
 });
 export const {

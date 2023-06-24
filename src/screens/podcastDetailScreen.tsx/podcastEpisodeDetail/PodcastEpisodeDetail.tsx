@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
 import './podcastepisodedetail.scss'
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import { podcastInformationPodcastEpisodes, podcastInformationPodcastSelected, setDescription, setEpisodes, setPodcast } from 'redux/slices/podcastSlice';
+import { useParams } from 'react-router-dom';
+import { podcastInformationPodcastEpisodes } from 'redux/slices/podcastSlice';
 
 export default function PodcastEpisodeDetail() {
 
   const podcastEpisodes = useSelector(podcastInformationPodcastEpisodes)
   const [episodeSelected, setEpisodeSelected] = useState() as any
-  const { id, idEpisode } = useParams();
+  const { idEpisode } = useParams();
 
   useEffect(()=>{
-    let filter = podcastEpisodes.find(({guid})=>guid.split('/').join()===idEpisode)
+    //Busca el episodio seleccionado
+    let filter = podcastEpisodes.find(({guid})=>guid.split('/').join().includes(idEpisode))
     setEpisodeSelected(filter)
+    
   },[podcastEpisodes])
   
   return (

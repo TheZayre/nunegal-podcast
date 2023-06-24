@@ -6,188 +6,156 @@ import { useDispatch } from "react-redux";
 import { useLazyGetPodcastQuery, useLazyGetPodcastsQuery } from "./services/podcastServiceApi";
 const CORS_PROXY_2 = "https://cors-anywhere.herokuapp.com/";
 
-export default function DBPresenter(){
-    const dispatch = useDispatch()
-    const [getPodcast] = useLazyGetPodcastQuery()
-    const [getPodcasts] = useLazyGetPodcastsQuery()
+export default function DBPresenter() {
+    const dispatch = useDispatch();
+    const [getPodcast] = useLazyGetPodcastQuery();
+    const [getPodcasts] = useLazyGetPodcastsQuery();
 
-    async function getPodcastsPersistance(){
-        let feed: { [key: string]: any; } & Parser.Output<{ [key: string]: any; }>;
+    async function getPodcastsPersistence() {
+        let feed: { [key: string]: any } & Parser.Output<{ [key: string]: any }>;
 
-        const request = indexedDB.open("podcast", 3)
-        request.onerror = function(event) {
-        // Manejar errores
-            console.log(event)
-        };
-        request.onupgradeneeded = function(event:any) {
-        var db = event?.target?.result;
-        if (!db.objectStoreNames.contains('podcastList')) {
-            db.createObjectStore('podcastList', { keyPath: 'id' });
-        }
-        };
-        request.onsuccess = async function(event:any) {
-        var db = event?.target?.result;
-        var transaction = db.transaction(['podcastList'], 'readwrite');
-        var store = transaction.objectStore('podcastList');
-        
-        let requestGet  = store.get("podcastList");
-        requestGet.onsuccess = async function(event:any) {
-            var result = event?.target?.result;
-            if(result?.timeAdded && !moreOldThanADay(result?.timeAdded)){
-                feed = result?.data;
-                dispatch(setPodcasts(feed))
-                dispatch(contextualSlice.actions.updateShowLoading(false))
-            }
-            else{
-                getPodcasts(null).then((data)=>{
-                    feed = data?.data
-                    const request = indexedDB.open("podcast", 3)
-                    request.onerror = function(event) {
-                        // Manejar errores
-                        console.log(event)
+        try {
+            const db = await openDatabase("podcast", 3);
+            const store = db.transaction(["podcastList"], "readwrite").objectStore("podcastList");
+            const requestGet = store.get("podcastList");
+            requestGet.onsuccess = async function (event: any) {
+                const result = event.target.result;
+                if (result?.timeAdded && !moreOldThanADay(result?.timeAdded)) {
+                    feed = result?.data;
+                    dispatch(setPodcasts(feed));
+                    dispatch(contextualSlice.actions.updateShowLoading(false));
+                } else {
+                    const data = await getPodcasts(null);
+                    feed = data?.data;
+                    const db = await openDatabase("podcast", 3);
+                    const transaction = db.transaction(["podcastList"], "readwrite");
+                    const store = transaction.objectStore("podcastList");
+                    const deleteRequest = store.delete("podcastList");
+                    deleteRequest.onsuccess = function () {
+                        const addRequest = store.add({ id: "podcastList", data: feed, timeAdded: new Date() });
+                        addRequest.onsuccess = function () {
+                            dispatch(setPodcast(feed));
+                            dispatch(contextualSlice.actions.updateShowLoading(false));
+                        };
                     };
-                    request.onupgradeneeded = function(event:any) {
-                        var db = event?.target?.result;
-                        if (!db.objectStoreNames.contains('podcastList')) {
-                        db.createObjectStore('podcastList', { keyPath: 'id' });
-                        }
-                    };
-                    request.onsuccess = async function(event:any) {
-                        var db = event?.target?.result;
-                        var transaction = db.transaction(['podcastList'], 'readwrite');
-                        var store = transaction.objectStore('podcastList');
-                        store.delete("podcastList");
-                        store.add({id:"podcastList", data: feed, timeAdded: new Date()});
-                    }
-                    dispatch(setPodcast(feed))
-                    dispatch(contextualSlice.actions.updateShowLoading(false))
-                })
-                
-            }
+                }
             };
+        } catch (error) {
+            console.log(error);
         }
-        
     }
 
-    async function getPodcastPersistance(id:any){
-        let feed: { [key: string]: any; } & Parser.Output<{ [key: string]: any; }>;
+    async function getPodcastPersistence(id: any) {
+        let feed: { [key: string]: any } & Parser.Output<{ [key: string]: any }>;
 
-        const request = indexedDB.open("podcast", 3)
-        request.onerror = function(event) {
-        // Manejar errores
-            console.log(event)
-        };
-        request.onupgradeneeded = function(event:any) {
-        var db = event?.target?.result;
-        if (!db.objectStoreNames.contains('podcastElement')) {
-            db.createObjectStore('podcastElement', { keyPath: 'id' });
-        }
-        };
-        request.onsuccess = async function(event:any) {
-        var db = event?.target?.result;
-        var transaction = db.transaction(['podcastElement'], 'readwrite');
-        var store = transaction.objectStore('podcastElement');
-        
-        let requestGet  = store.get(id);
-        requestGet.onsuccess = async function(event:any) {
-            var result = event?.target?.result;
-            if(result?.timeAdded && !moreOldThanADay(result?.timeAdded)){
-                feed = result?.data;
-                
-                getEpisodesPersistance(result?.data)
-                dispatch(setPodcast((JSON.parse(feed?.contents)?.results[0])))
-                dispatch(contextualSlice.actions.updateShowLoading(false))
-            }
-            else{
-                getPodcast(id).then((data)=>{
-                    feed = data?.data
-                    const request = indexedDB.open("podcast", 3)
-                    request.onerror = function(event) {
-                        // Manejar errores
-                        console.log(event)
-                    };
-                    request.onupgradeneeded = function(event:any) {
-                        var db = event?.target?.result;
-                        if (!db.objectStoreNames.contains('podcastElement')) {
-                        db.createObjectStore('podcastElement', { keyPath: 'id' });
-                        }
-                    };
-                    request.onsuccess = async function(event:any) {
-                        var db = event?.target?.result;
-                        var transaction = db.transaction(['podcastElement'], 'readwrite');
-                        var store = transaction.objectStore('podcastElement');
-                        store.delete(id);
-                        store.add({id:id, data: feed, timeAdded: new Date()});
-                        getEpisodesPersistance(data?.data)
+        try {
+            const db = await openDatabase("podcast", 3);
+            const store = db.transaction(["podcastElement"], "readwrite").objectStore("podcastElement");
+            const requestGet = store.get(id);
+            requestGet.onsuccess = async function (event: any) {
+                const result = event.target.result;
+                if (result?.timeAdded && !moreOldThanADay(result?.timeAdded)) {
+                    feed = result?.data;
+                    getEpisodesPersistence(result?.data);
+                    dispatch(setPodcast(JSON.parse(feed?.contents)?.results[0]));
+                    dispatch(contextualSlice.actions.updateShowLoading(false));
+                } else {
+                    const data = await getPodcast(id);
+                    if (!JSON.parse(data?.data?.contents)?.errorMessage) {
+                        feed = data?.data;
+                        const db = await openDatabase("podcast", 3);
+                        const transaction = db.transaction(["podcastElement"], "readwrite");
+                        const store = transaction.objectStore("podcastElement");
+                        const deleteRequest = store.delete(id);
+                        deleteRequest.onsuccess = function () {
+                            const addRequest = store.add({ id: id, data: feed, timeAdded: new Date() });
+                            addRequest.onsuccess = function () {
+                                getEpisodesPersistence(data?.data);
+                                dispatch(setPodcast(JSON.parse(feed?.contents)?.results[0]));
+                                dispatch(contextualSlice.actions.updateShowLoading(false));
+                            };
+                        };
+
                     }
-                    dispatch(setPodcast((JSON.parse(feed?.contents)?.results[0])))
-                    dispatch(contextualSlice.actions.updateShowLoading(false))
-                })
-                
-            }
+                    else {
+                        dispatch(setPodcast(null));
+                        dispatch(contextualSlice.actions.updateShowLoading(false));
+                    }
+                }
             };
+        } catch (error) {
+            console.log(error);
         }
-        
     }
 
-
-    async function getEpisodesPersistance(data:any){
+    async function getEpisodesPersistence(data: any) {
         let parser = new Parser();
-        let feed: { [key: string]: any; } & Parser.Output<{ [key: string]: any; }>;
+        let feed: any;
 
-        const request = indexedDB.open("podcast", 3)
-        request.onerror = function(event) {
-            // Manejar errores
-            console.log(event)
-        };
-            request.onupgradeneeded = function(event:any) {
-              var db = event?.target?.result;
-              if (!db.objectStoreNames.contains('episodes')) {
-                db.createObjectStore('episodes', { keyPath: 'id' });
-              }
+        try {
+            const db = await openDatabase("podcast", 3);
+            const store = db.transaction(["episodes"], "readwrite").objectStore("episodes");
+            const requestGet = store.get(JSON.parse(data?.contents)?.results[0]?.feedUrl);
+            requestGet.onsuccess = async function (event: any) {
+                const result = event.target.result;
+                if (result?.timeAdded && !moreOldThanADay(result?.timeAdded)) {
+                    feed = result?.data;
+                } else {
+                    dispatch(contextualSlice.actions.updateShowLoading(true));
+                    feed = await parser.parseURL(`${CORS_PROXY_2 + JSON.parse(data?.contents)?.results[0]?.feedUrl}`).catch((e)=>{
+                        console.log(e)
+                    });
+                    if(feed){
+                    const db = await openDatabase("podcast", 3);
+                    const transaction = db.transaction(["episodes"], "readwrite");
+                    const store = transaction.objectStore("episodes");
+                    const deleteRequest = store.delete(JSON.parse(data?.contents)?.results[0]?.feedUrl);
+                    deleteRequest.onsuccess = function () {
+                        const addRequest = store.add({ id: JSON.parse(data?.contents)?.results[0]?.feedUrl, data: feed, timeAdded: new Date() });
+                        addRequest.onsuccess = function () {
+                            dispatch(setEpisodes(feed?.items));
+                            dispatch(setDescription(feed?.description));
+                            dispatch(contextualSlice.actions.updateShowLoading(false));
+                        };
+                    };
+                }
+                dispatch(setEpisodes(feed?.items));
+                dispatch(setDescription(feed?.description));
+                dispatch(contextualSlice.actions.updateShowLoading(false));
             };
-            request.onsuccess = async function(event:any) {
-              var db = event?.target?.result;
-              var transaction = db.transaction(['episodes'], 'readwrite');
-              var store = transaction.objectStore('episodes');
-              
-              let requestGet  = store.get(JSON.parse(data?.contents)?.results[0]?.feedUrl);
-              requestGet.onsuccess = async function(event:any) {
-                var result = event?.target?.result;
-                if(result?.timeAdded && !moreOldThanADay(result?.timeAdded)){
-                  feed = result?.data;
-                }
-                else{
-                  feed = await parser.parseURL(`${CORS_PROXY_2+JSON.parse(data?.contents)?.results[0]?.feedUrl}`)
-                  const request = indexedDB.open("podcast", 3)
-                  request.onerror = function(event) {
-                    // Manejar errores
-                    console.log(event)
-                  };
-                  request.onupgradeneeded = function(event:any) {
-                    var db = event?.target?.result;
-                    if (!db.objectStoreNames.contains('episodes')) {
-                      db.createObjectStore('episodes', { keyPath: 'id' });
-                    }
-                  };
-                  request.onsuccess = async function(event:any) {
-                    var db = event?.target?.result;
-                    var transaction = db.transaction(['episodes'], 'readwrite');
-                    var store = transaction.objectStore('episodes');
-                    store.delete(JSON.parse(data?.contents)?.results[0]?.feedUrl);
-                    store.add({id:JSON.parse(data?.contents)?.results[0]?.feedUrl, data: feed, timeAdded: new Date()});
-                  }
-                }
-                
-                dispatch(setEpisodes(feed?.items))
-                dispatch(setDescription(feed?.description))
-                dispatch(contextualSlice.actions.updateShowLoading(false))
-              }
         }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function openDatabase(name: string, version: number) {
+        return new Promise<IDBDatabase>((resolve, reject) => {
+            const request = indexedDB.open(name, version);
+            request.onerror = function (event) {
+                reject(event);
+            };
+            request.onsuccess = function (event: any) {
+                resolve(event.target.result);
+            };
+            request.onupgradeneeded = function (event: any) {
+                const db = event.target.result;
+                if (!db.objectStoreNames.contains("podcastList")) {
+                    db.createObjectStore("podcastList", { keyPath: "id" });
+                }
+                if (!db.objectStoreNames.contains("podcastElement")) {
+                    db.createObjectStore("podcastElement", { keyPath: "id" });
+                }
+                if (!db.objectStoreNames.contains("episodeList")) {
+                    db.createObjectStore("episodeList", { keyPath: "id" });
+                }
+            };
+        });
     }
 
     return {
-        getPodcastPersistance, getPodcastsPersistance, getEpisodesPersistance
-      };
-
+        getPodcastsPersistence,
+        getPodcastPersistence,
+        getEpisodesPersistence,
+    };
 }

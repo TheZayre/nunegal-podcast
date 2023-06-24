@@ -13,7 +13,6 @@ export default function PodcastScreen() {
   const [number, setNumber] = useState(podcastList?.feed?.entry?.length ?? 0)
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()
 
   const onClickPodcast = (id: string) =>  {
     navigate(`/podcast/${id}`)
@@ -21,6 +20,7 @@ export default function PodcastScreen() {
 
   const renderPodcasts = () =>  {
     let res = [] as any
+    //Filtra los podcasts escritos en el input por nombre o autor
     let filtered = podcastList?.feed?.entry.filter((element: { [x: string]: { label: string; }; })=>element["im:name"].label.toLowerCase().includes(filter.toLowerCase()) || 
       element["im:artist"].label.toLowerCase().includes(filter.toLowerCase()))
     for(let element in filtered)

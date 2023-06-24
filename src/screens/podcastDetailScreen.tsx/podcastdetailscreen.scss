@@ -4,6 +4,12 @@ podcast-detail-screen-content,
 .podcast-detail-screen-content {
   padding: 50px;
 
+  &>.not-found {
+    padding: 20px;
+    font-size: 20px;
+    color: $primary-blue
+  }
+
   &>.podcast-detail {
     padding: 20px;
     display:flex;

@@ -1,23 +1,19 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import './App.scss';
 import Loading from 'components/contextual/Loading';
 import PodcastScreen from 'screens/podcastScreen/PodcastScreen';
-import { useLazyGetPodcastsQuery } from 'redux/services/podcastServiceApi';
 import { useEffect } from 'react';
 import PodcastDetailScreen from 'screens/podcastDetailScreen.tsx/PodcasDetailScreen';
 import DBPresenter from 'redux/DBPresenter';
 
 export default function App() {
 
-  const {getPodcastsPersistance} = DBPresenter()
-  const [getPodcasts] = useLazyGetPodcastsQuery();
+  const {getPodcastsPersistence} = DBPresenter()
 
   useEffect(()=>{
-    const fetchData = async () => {
-      getPodcastsPersistance()
-    }
-    fetchData()
-  },[getPodcasts])
+    //Obtiene el listado de podcasts
+    getPodcastsPersistence()
+  },[])
 
   return (
     <>

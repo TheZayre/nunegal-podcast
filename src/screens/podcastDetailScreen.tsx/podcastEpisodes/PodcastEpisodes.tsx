@@ -22,7 +22,7 @@ export default function PodcastEpisodes() {
         <div className={'header'} key={element}>
           <div className={i%2==0 ? 'title-element pair' : 'title-element'} onClick={()=>{navigate(`/podcast/${podcastSelected?.collectionId}/episode/${podcastEpisodes[element]?.guid.split('/').join()}`);}}>
             {podcastEpisodes[element]?.title}
-            </div>
+          </div>
           <div className={i%2==0 ? 'date-element pair' : 'date-element'}>{date}</div>
           <div className={i%2==0 ? 'duration-element pair' : 'duration-element'}>{getTime(podcastEpisodes[element]?.itunes?.duration) ?? '-'}</div>
       </div>
@@ -44,7 +44,6 @@ export default function PodcastEpisodes() {
         <div className={'duration'}>{'Duration'}</div>
       </div>
       {renderEpisodes()}
-
       </div>
     </div>
   );
