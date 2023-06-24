@@ -3,7 +3,6 @@ import './podcastdetailscreen.scss'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { resetSelected} from 'redux/slices/podcastSlice';
-import { useLazyGetPodcastQuery } from 'redux/services/podcastServiceApi';
 import { useEffect } from 'react';
 import PodcastCard from './podcastCard/PodcastCard';
 import PodcastEpisodes from './podcastEpisodes/PodcastEpisodes';
@@ -13,14 +12,12 @@ import DBPresenter from 'redux/DBPresenter';
 export default function PodcastDetailScreen() {
   const navigate = useNavigate();
   const dispatch = useDispatch()
-  const [getPodcast] = useLazyGetPodcastQuery()
   const { id, idEpisode } = useParams();
   const {getPodcastPersistance} = DBPresenter()
 
   useEffect(()=>{
     const fetchData = () => {
       getPodcastPersistance(id)
-      //getPodcast(id)
   }
     fetchData()
     return () => {

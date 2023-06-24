@@ -50,10 +50,11 @@ export const podcastServiceApi = createApi({
             const { data } = await queryFulfilled;
             
             dispatch(setPodcast(JSON.parse(data?.contents)?.results[0]))
-            let parser = new Parser();
+            /*let parser = new Parser();
             let feed = await parser.parseURL(`${CORS_PROXY_2+JSON.parse(data?.contents)?.results[0]?.feedUrl}`)
             dispatch(setEpisodes(feed?.items))
             dispatch(setDescription(feed?.description))
+            )*/
             dispatch(contextualSlice.actions.updateShowLoading(false))
 
           

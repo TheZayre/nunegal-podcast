@@ -4,22 +4,17 @@ import Loading from 'components/contextual/Loading';
 import PodcastScreen from 'screens/podcastScreen/PodcastScreen';
 import { useLazyGetPodcastsQuery } from 'redux/services/podcastServiceApi';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import PodcastDetailScreen from 'screens/podcastDetailScreen.tsx/PodcasDetailScreen';
+import DBPresenter from 'redux/DBPresenter';
 
 export default function App() {
 
-  /**
-   * Persistencia
-   * Estilo de reproductor
-   * / */
-
+  const {getPodcastsPersistance} = DBPresenter()
   const [getPodcasts] = useLazyGetPodcastsQuery();
-  const dispatch = useDispatch();
 
   useEffect(()=>{
     const fetchData = async () => {
-      await getPodcasts(null)
+      getPodcastsPersistance()
     }
     fetchData()
   },[getPodcasts])
